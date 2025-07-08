@@ -33,7 +33,7 @@ class PolicyNet(nn.Module):
 
     def __init__(self, hidden_size: int = 16):
         super().__init__()
-        self.fc1 = nn.Linear(4, hidden_size)
+        self.fc1 = nn.Linear(4, hidden_size) # 4 --> 32 + 256 + cell_state=256
         self.fc2 = nn.Linear(hidden_size, 2)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:  # logits
@@ -67,8 +67,8 @@ def rollout(
     pickling large objects between processes and keeps each worker independent.
     """
     # Build environment – no rendering in workers
-    #env = gym.make("CartPole-v1", render_mode=None)
-    env = gym.make("CarRacing-v3", render_mode=None)
+    env = gym.make("CartPole-v1", render_mode=None)
+    #env = gym.make("CarRacing-v3", render_mode=None)
     if env_seed is not None:
         env.reset(seed=env_seed)
 
